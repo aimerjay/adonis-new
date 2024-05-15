@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 // import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
+import Badge from 'App/Models/Badge'
+import Certificate from './Certificate'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -20,7 +22,6 @@ export default class User extends BaseModel {
 
   @column()
   public status: string;
-
   @column()
   public rank: string;
 
@@ -35,4 +36,22 @@ export default class User extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @manyToMany(() => Badge, {
+    pivotTable: 'user_badges',
+    pivotTimestamps: {
+      createdAt: 'acquired_at',
+      updatedAt: 'updated_at'
+    }
+  })
+  public badges: ManyToMany<typeof Badge>
+
+  @manyToMany(() => Certificate, {
+    pivotTable: 'user_certificates',
+    pivotTimestamps: {
+      createdAt: 'acquired_at',
+      updatedAt: 'updated_at'
+    }
+  })
+  public certificates: ManyToMany<typeof Certificate>
 }

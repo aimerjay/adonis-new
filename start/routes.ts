@@ -24,9 +24,9 @@ Route.get('/', async ({ view }) => {
   return view.render('welcome')
 })
 
-Route.get('/users', () => {
-  return 'List of posts'
-})
+// Route.get('/users', () => {
+//   return 'List of posts'
+// })
 
 // Route.get('/users/:id', () => {
 //   return 'Return a single post'
@@ -35,13 +35,46 @@ Route.get('/users', () => {
 //   return 'Handle post creation form request'
 // })
 
+Route.get('/users', () => {
+  return 'List of Users'
+})
 Route.post("/store", "UsersController.store");
 Route.get("/users/:id", "UsersController.show");
 Route.put("/users/:id", "UsersController.update");
 Route.delete("/users/:id", "UsersController.destroy");
+
+Route.get('/courses', () => {
+  return 'List of Courses'
+})
+Route.post("courses/store", "CoursesController.store");
+Route.get("/courses/:id", "CoursesController.show");
+Route.put("/courses/:id", "CoursesController.update");
+Route.delete("/courses/:id", "CoursesController.destroy");
+
+Route.get('/certificates', () => {
+  return 'List of Certificates'
+})
+Route.post("certificates/store", "CertificatesController.store");
+Route.get("/certificates/:id", "CertificatesController.show");
+Route.put("/certificates/:id", "CertificatesController.update");
+Route.delete("/certificates/:id", "CertificatesController.destroy");
+
+Route.get('/badges', () => {
+  return 'List of Badges'
+})
+Route.post("badges/store", "BadgesController.store");
+Route.get("/badges/:id", "BadgesController.show");
+Route.put("/badges/:id", "BadgesController.update");
+Route.delete("/badges/:id", "BadgesController.destroy");
+
+Route.post("/acquirebadge", "UsersController.acquireBadge");
+
+Route.post("/acquirecert", "UsersController.acquireCert");
 
 // Route.resource('user','UsersController');
 // Route.get('/users/:id', async ({ params }) => {
 //   return `Viewing post with id ${params.id}`
 // })
 
+Route.get("/getbadges/:id", "UsersController.getbadges");
+Route.get("/getcertificates/:id", "UsersController.getcertificates");
