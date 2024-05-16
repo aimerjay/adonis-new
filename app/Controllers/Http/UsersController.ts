@@ -181,7 +181,7 @@ export default class UsersController {
 
     // response.status(200).json({User: userdata, Certificates: certificatedata, data: user.certificates})
 
-    console.log('User', user.fname, user.lname)
+    console.log('User: ', user.fname, user.lname)
     console.log('Certificates:', user.certificates.map(certificates=>certificates.title))
   }
 

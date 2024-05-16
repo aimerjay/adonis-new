@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
-// import { attachment, AttachmentContract } from '@ioc:Adonis/Addons/AttachmentLite'
+import Hash from '@ioc:Adonis/Core/Hash'
+import { column, beforeSave, BaseModel , ManyToMany, manyToMany } from '@ioc:Adonis/Lucid/Orm'
 import Badge from 'App/Models/Badge'
 import Certificate from './Certificate'
 
@@ -13,6 +13,9 @@ export default class User extends BaseModel {
 
   @column({ serializeAs: null })
   public password: string
+
+  @column()
+  public rememberMeToken: string | null
 
   @column()
   public fname: string;
@@ -36,6 +39,13 @@ export default class User extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
+
+  @beforeSave()
+  public static async hashPassword (user: User) {
+    if (user.$dirty.password) {
+      user.password = await Hash.make(user.password)
+    }
+  }
 
   @manyToMany(() => Badge, {
     pivotTable: 'user_badges',
